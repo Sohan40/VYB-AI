@@ -2,6 +2,11 @@
 import os
 import streamlit as st
 from dotenv import load_dotenv
+import pathlib
+
+HERE = pathlib.Path(__file__).parent.parent  # points at repo root
+DATA = HERE / "data"
+
 
 load_dotenv()
 ENDPOINT   = os.getenv("ENDPOINT")
@@ -20,8 +25,8 @@ from pathlib import Path
 
 
 llm        = LLMClient(ENDPOINT, API_KEY, DEPLOYMENT)
-db         = load_csv("/data/Nutrition_source.csv").to_dict(orient="records")
-cat_df     = load_csv("/data/food_category.csv")
+db         = load_csv(str(DATA / "Nutrition_source.csv")).to_dict(orient="records")
+cat_df     = load_csv(str(DATA / "food_category.csv"))
 fetcher    = IngredientFetcher(llm)
 mapper     = NutritionMapper(db)
 classifier = FoodClassifier(llm, cat_df["Food category name"].tolist())

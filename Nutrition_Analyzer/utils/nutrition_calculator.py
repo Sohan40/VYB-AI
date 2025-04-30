@@ -11,7 +11,8 @@ def calculate_totals(mapped: dict, weights: list) -> tuple:
         try:
             g = float(g_raw)
         except (TypeError, ValueError):
-            logger.warning(f"NutritionCalculator: Invalid grams '{g_raw}' for {name}, skipping.")
+            logger.warning(f"NutritionCalculator: Invalid grams '{g_raw}' for {name}.")
+            g=1
             continue
         rec = mapped.get(name)
         if rec is None:

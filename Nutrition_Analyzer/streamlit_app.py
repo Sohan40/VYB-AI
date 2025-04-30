@@ -18,10 +18,10 @@ from utils.classifier           import FoodClassifier
 from utils.serving_calculator   import calculate_serving
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent 
+
 llm        = LLMClient(ENDPOINT, API_KEY, DEPLOYMENT)
-db         = load_csv(BASE_DIR/"/data/Nutrition_source.csv").to_dict(orient="records")
-cat_df     = load_csv(BASE_DIR/"/data/food_category.csv")
+db         = load_csv("/data/Nutrition_source.csv").to_dict(orient="records")
+cat_df     = load_csv("/data/food_category.csv")
 fetcher    = IngredientFetcher(llm)
 mapper     = NutritionMapper(db)
 classifier = FoodClassifier(llm, cat_df["Food category name"].tolist())

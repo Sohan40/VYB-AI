@@ -7,8 +7,12 @@ def calculate_totals(mapped: dict, weights: list) -> tuple:
     details = []
     for item in weights:
         name = item.get('ingredient')
-        g = item.get('grams', 0)
-        g = float(g)
+        g_raw = item.get('grams', 0)
+        try:
+            g = float(g_raw)
+        except (TypeError, ValueError):
+            logger.warning(f"NutritionCalculator: Invalid grams '{g_raw}' for {name}, skipping.")
+            continue
         rec = mapped.get(name)
         if rec is None:
             logger.warning(f"NutritionCalculator: No mapping for ingredient {name}")
